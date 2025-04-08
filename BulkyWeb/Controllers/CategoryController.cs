@@ -12,9 +12,9 @@ namespace BulkyWeb.Controllers
         {
             _db = db;
         }
+
         public IActionResult Index()
         {
-
             List<Category> objCategoryList = _db.Categrories.ToList();
 
             return View(objCategoryList);
@@ -28,10 +28,13 @@ namespace BulkyWeb.Controllers
         [HttpPost]
         public IActionResult Create(Category category)
         {
-
-            _db.Categrories.Add(category);
-            _db.SaveChanges();
-            return RedirectToAction("Index","Category");
+            if (ModelState.IsValid)
+            {
+                _db.Categrories.Add(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index", "Category");
+            }
+            return View(); 
         }
     }
 }
