@@ -8,28 +8,28 @@ namespace BulkyWeb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> option)
             : base(option) { }
 
-        public DbSet<Categrory> Categrories { get; set; }
+        public DbSet<Category> Categrories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<Categrory>()
+                .Entity<Category>()
                 .HasData(
-                    new Categrory
+                    new Category
                     {
                         CategoryId = 1,
                         Name = "Action",
                         DisplayOrder = 1,
                     },
 
-                    new Categrory
+                    new Category
                     {
                         CategoryId = 2 ,
                         Name = "SciFi",
                         DisplayOrder = 1,
                     },
 
-                    new Categrory
+                    new Category
                     {
                         CategoryId = 3 ,
                         Name = "History",
