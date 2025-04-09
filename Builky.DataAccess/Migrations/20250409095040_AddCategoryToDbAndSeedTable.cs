@@ -7,11 +7,25 @@
 namespace Builky.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedCategryTable : Migration
+    public partial class AddCategoryToDbAndSeedTable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categrories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categrories", x => x.CategoryId);
+                });
+
             migrationBuilder.InsertData(
                 table: "Categrories",
                 columns: new[] { "CategoryId", "DisplayOrder", "Name" },
@@ -26,20 +40,8 @@ namespace Builky.DataAccess.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Categrories",
-                keyColumn: "CategoryId",
-                keyValue: 1);
-
-            migrationBuilder.DeleteData(
-                table: "Categrories",
-                keyColumn: "CategoryId",
-                keyValue: 2);
-
-            migrationBuilder.DeleteData(
-                table: "Categrories",
-                keyColumn: "CategoryId",
-                keyValue: 3);
+            migrationBuilder.DropTable(
+                name: "Categrories");
         }
     }
 }
