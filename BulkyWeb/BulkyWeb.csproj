@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Builky.DataAccess\Builky.DataAccess.csproj" />
+    <ProjectReference Include="..\Builky.Models\Builky.Models.csproj" />
+  </ItemGroup>
+
 </Project>

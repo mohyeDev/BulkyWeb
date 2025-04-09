@@ -1,7 +1,7 @@
-﻿using BulkyWeb.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Builky.Models.Models;
 
-namespace BulkyWeb.Data
+namespace Builky.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {
