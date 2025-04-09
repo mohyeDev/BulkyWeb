@@ -57,7 +57,7 @@ namespace BulkyWeb.Controllers
                 return NotFound();
             }
 
-            Category categoryFromDb = _db.Categrories.Find(id);
+            Category? categoryFromDb = _db.Categrories.Find(id);
             if(categoryFromDb is null)
             {
                 return NotFound();
@@ -66,8 +66,15 @@ namespace BulkyWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit()
+        public IActionResult Edit(Category category)
         {
+            if (ModelState.IsValid)
+            {
+                _db.Categrories.Update(category);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
             return View();
         }
     }
