@@ -1,5 +1,6 @@
 ﻿@model Category
 <form method="post">
+    <input asp-for="CategoryId" hidden/>
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Edit Category</h2>
@@ -17,7 +18,7 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <button asp-controller="Category" asp-action="Create" type="submit" class="btn btn-outline-primary form-control">Update</button>
+                <button asp-controller="Category" asp-action="Edit" type="submit" class="btn btn-outline-primary form-control">Update</button>
             </div>
             <div class="col-6">
                 <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary form-control">
