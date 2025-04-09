@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Builky.DataAccess.Repository
 {
-    class UnitOfWork : IUnitOfWork
+  public  class UnitOfWork : IUnitOfWork
     {
 
         private readonly ApplicationDbContext _db;
