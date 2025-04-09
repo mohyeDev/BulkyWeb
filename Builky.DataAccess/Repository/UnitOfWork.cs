@@ -1,30 +1,30 @@
 ﻿using Builky.DataAccess.Data;
 using Builky.DataAccess.Repository.IRepository;
-using Builky.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Builky.DataAccess.Repository
 {
-    public class CategoryRepository :  Repository<Category>  , ICategoryRespoitory
+    class UnitOfWork : IUnitOfWork
     {
 
         private readonly ApplicationDbContext _db;
+        public ICategoryRespoitory categoryRespoitory { get; private set; }
 
-        public CategoryRepository(ApplicationDbContext db) : base(db)
+        public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
+            categoryRespoitory = new CategoryRepository(_db);
         }
 
-        
 
-        public void Update(Category category)
+
+        public void Save()
         {
-            _db.Categrories.Update(category);
+            _db.SaveChanges();
         }
     }
 }
