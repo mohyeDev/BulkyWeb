@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Builky.DataAccess.Repository
 {
-    class CategoryRepository :  Repository<Category>  , ICategoryRespoitory
+    public class CategoryRepository :  Repository<Category>  , ICategoryRespoitory
     {
 
         private readonly ApplicationDbContext _db;
