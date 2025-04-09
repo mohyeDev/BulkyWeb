@@ -96,11 +96,11 @@ namespace BulkyWeb.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost , ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
 
-            Category category = _db.Categrories.Find(id);
+            Category? category = _db.Categrories.Find(id);
             if(category is null)
             {
                 return NotFound();
