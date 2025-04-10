@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,26 +18,28 @@ namespace BulkyWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> productsList = _unitOfWork.productRepository.GetAll().ToList();
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.categoryRespoitory
-                .GetAll().Select(u => new SelectListItem()
-                {
-                    Text = u.Name,
-                    Value = u.CategoryId.ToString()
-                });
+            
             return View(productsList);
         }
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> CategoryList = _unitOfWork
+                .categoryRespoitory.GetAll()
+                .Select(u => new SelectListItem()
+                {
+                    Text = u.Name,
+                    Value = u.CategoryId.ToString(),
+                });
+
+            ViewBag.CategoryList = CategoryList; 
             return View();
         }
 
-
         [HttpPost]
-
         public IActionResult Create(Product product)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _unitOfWork.productRepository.Add(product);
                 _unitOfWork.Save();
@@ -49,16 +50,15 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View();
         }
 
-
         public IActionResult Edit(int? id)
         {
-            if(id is null || id <= 0)
+            if (id is null || id <= 0)
             {
                 return NotFound();
             }
 
             Product productFromDb = _unitOfWork.productRepository.Get(u => u.Id == id);
-            if(productFromDb is null)
+            if (productFromDb is null)
             {
                 return NotFound();
             }
@@ -67,7 +67,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-
         public IActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
@@ -81,7 +80,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View();
         }
 
-
         public IActionResult Delete(int? id)
         {
             if (id is null || id <= 0)
@@ -91,7 +89,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             Product productFromDb = _unitOfWork.productRepository.Get(u => u.Id == id);
 
-            if(productFromDb is null)
+            if (productFromDb is null)
             {
                 return NotFound();
             }
@@ -99,14 +97,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(productFromDb);
         }
 
-        [HttpPost,ActionName("Delete")]
-
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePOST(int? id)
         {
-
             Product product = _unitOfWork.productRepository.Get(u => u.Id == id);
 
-            if(product is null)
+            if (product is null)
             {
                 return NotFound();
             }
@@ -117,7 +113,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             TempData["Success"] = "Product Deleted Successfully";
             return RedirectToAction("Index");
-
         }
     }
 }
