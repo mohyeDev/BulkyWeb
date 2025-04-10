@@ -1,11 +1,11 @@
 ﻿using Builky.DataAccess.Data;
 using Builky.DataAccess.Repository.IRepository;
 using Builky.Models.Models;
-
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyWeb.Controllers
+namespace BulkyWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
