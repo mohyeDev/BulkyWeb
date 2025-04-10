@@ -23,7 +23,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(productsList);
         }
 
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
 
             //ViewBag.CategoryList = CategoryList; 
@@ -38,11 +38,25 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productVM);
+
+            if(id is null || id <= 0 )
+            {
+
+                //Create
+                return View(productVM);
+            }
+
+            else
+            {
+                // Update
+                productVM.Product = _unitOfWork.productRepository.Get(u => u.Id == id);
+                return View(productVM);
+                    
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(ProductVM productVM)
+        public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
@@ -65,35 +79,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
         }
 
-        public IActionResult Edit(int? id)
-        {
-            if (id is null || id <= 0)
-            {
-                return NotFound();
-            }
-
-            Product productFromDb = _unitOfWork.productRepository.Get(u => u.Id == id);
-            if (productFromDb is null)
-            {
-                return NotFound();
-            }
-
-            return View(productFromDb);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _unitOfWork.productRepository.Update(product);
-                _unitOfWork.Save();
-                TempData["Success"] = "Product Updated Successfully";
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
+     
 
         public IActionResult Delete(int? id)
         {
