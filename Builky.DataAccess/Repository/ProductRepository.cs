@@ -20,7 +20,24 @@ namespace Builky.DataAccess.Repository
         }
         public void Update(Product product)
         {
-            _db.Products.Update(product);
+            var productFromDb = _db.Products.FirstOrDefault(u => u.Id == product.Id);
+            if(productFromDb is not null)
+            {
+                productFromDb.Title = product.Title;
+                productFromDb.ISBN = product.ISBN;
+                productFromDb.Price = product.Price;
+                productFromDb.Price50 = product.Price50;
+                productFromDb.ListPrice = product.ListPrice;
+                productFromDb.Price100 = product.Price100;
+                productFromDb.Description = product.Description;
+                productFromDb.CategoryId = product.CategoryId;
+                productFromDb.Author = product.Author;
+
+                if(product.ImageUrl is not null)
+                {
+                    productFromDb.ImageUrl = product.ImageUrl;
+                }
+            }
         }
     }
 }
