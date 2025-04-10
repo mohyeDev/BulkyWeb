@@ -8,16 +8,19 @@ using System.Threading.Tasks;
 
 namespace Builky.DataAccess.Repository
 {
-  public  class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
 
         private readonly ApplicationDbContext _db;
         public ICategoryRespoitory categoryRespoitory { get; private set; }
 
+        public IProductRepository productRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             categoryRespoitory = new CategoryRepository(_db);
+            productRepository = new ProductRepository(_db);
         }
 
 

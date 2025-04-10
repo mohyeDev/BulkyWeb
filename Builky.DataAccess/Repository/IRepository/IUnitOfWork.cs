@@ -9,6 +9,7 @@ namespace Builky.DataAccess.Repository.IRepository
     public interface IUnitOfWork
     {
         ICategoryRespoitory categoryRespoitory { get; }
+        IProductRepository productRepository { get; }
 
         void Save();
     }
