@@ -130,6 +130,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         }
 
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
             Product product = _unitOfWork.productRepository.Get(u => u.Id == id);
