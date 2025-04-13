@@ -119,42 +119,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
 
 
-        public IActionResult Delete(int? id)
-        {
-            if (id is null || id <= 0)
-            {
-                return NotFound();
-            }
-
-            Product productFromDb = _unitOfWork.productRepository.Get(u => u.Id == id);
-
-            if (productFromDb is null)
-            {
-                return NotFound();
-            }
-
-            return View(productFromDb);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePOST(int? id)
-        {
-            Product product = _unitOfWork.productRepository.Get(u => u.Id == id);
-
-            if (product is null)
-            {
-                return NotFound();
-            }
-
-            _unitOfWork.productRepository.Remove(product);
-
-            _unitOfWork.Save();
-
-            TempData["Success"] = "Product Deleted Successfully";
-            return RedirectToAction("Index");
-        }
-    
-
 
     #region APICALLS
     [HttpGet]
@@ -164,6 +128,27 @@ namespace BulkyWeb.Areas.Admin.Controllers
             List<Product> productsList = _unitOfWork.productRepository.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = productsList });
 
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            Product product = _unitOfWork.productRepository.Get(u => u.Id == id);
+
+            if(product is null)
+            {
+                return Json(new { sucess = false , message ="Error While Deleting" }); 
+            }
+
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, product
+                .ImageUrl.TrimStart('\\'));
+            if(System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+
+            _unitOfWork.productRepository.Remove(product);
+            _unitOfWork.Save();
+            return Json(new { sucess = true , message ="Deleted Successfully!"}); 
         }
         #endregion
     }
