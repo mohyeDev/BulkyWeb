@@ -1,73 +1,174 @@
 ﻿@page
 @model RegisterModel
-@{
-    ViewData["Title"] = "Register";
-}
 
-<h1>@ViewData["Title"]</h1>
-
-<div class="row">
-    <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-
-            <div class="form-floating mb-3">
-                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                    <option disabled selected>Select Role</option>
-                </select>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
-        </form>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to register.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <!-- Card Header with Gradient Background -->
+                <div class="card-header bg-primary bg-gradient py-4">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 class="text-white mb-0 fw-bold">
+                                <i class="bi bi-person-plus me-2"></i>Register
+                            </h2>
                         </div>
-                    </form>
-                }
-            }
-        </section>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body p-5">
+                    <div class="row">
+                        <!-- Registration Form Column -->
+                        <div class="col-lg-6">
+                            <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="needs-validation" novalidate>
+                                <h3 class="h5 text-center mb-4 text-primary">
+                                    <i class="bi bi-pencil-square me-2"></i>Create a new account
+                                </h3>
+
+                                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                                <!-- Email Input -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Email" class="form-control rounded-3" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                                    <label asp-for="Input.Email" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>Email address
+                                    </label>
+                                    <span asp-validation-for="Input.Email" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Password Input -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.Password" class="form-control rounded-3" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                    <label asp-for="Input.Password" class="text-muted">
+                                        <i class="bi bi-lock me-1"></i>Password
+                                    </label>
+                                    <span asp-validation-for="Input.Password" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Confirm Password Input -->
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.ConfirmPassword" class="form-control rounded-3" autocomplete="new-password" aria-required="true" placeholder="password" />
+                                    <label asp-for="Input.ConfirmPassword" class="text-muted">
+                                        <i class="bi bi-lock-fill me-1"></i>Confirm Password
+                                    </label>
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
+                                </div>
+
+                                <!-- Role Selection -->
+                                <div class="mb-4">
+                                    <label class="form-label text-muted mb-2">
+                                        <i class="bi bi-person-badge me-1"></i>Select Role
+                                    </label>
+                                    <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-3 py-3">
+                                        <option disabled selected>Select your role</option>
+                                    </select>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button id="registerSubmit" type="submit" class="w-100 btn btn-primary btn-lg rounded-pill py-3 shadow-sm">
+                                    <i class="bi bi-person-check me-2"></i>Register Now
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Social Auth Column -->
+                        <div class="col-lg-6 mt-4 mt-lg-0">
+                            <div class="h-100 d-flex flex-column justify-content-center">
+                                <section>
+                                    <h3 class="h5 text-center mb-4 text-primary">
+                                        <i class="bi bi-people me-2"></i>Sign up with social
+                                    </h3>
+                                    <hr class="my-4">
+
+                                    @{
+                                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                        {
+                                            <div class="alert alert-info">
+                                                <p class="mb-0">
+                                                    There are no external authentication services configured. See this
+                                                    <a href="https://go.microsoft.com/fwlink/?LinkID=532715" class="alert-link">
+                                                        article about setting up external authentication
+                                                    </a>.
+                                                </p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                                <div class="d-grid gap-3">
+                                                    @foreach (var provider in Model.ExternalLogins!)
+                                                    {
+                                                        var providerClass = provider.DisplayName.ToLower();
+                                                        providerClass = providerClass == "microsoft" ? "microsoft" : providerClass;
+
+                                                        <button type="submit" class="btn btn-outline-primary rounded-pill d-flex align-items-center justify-content-center py-2"
+                                                                name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                                            <i class="bi bi-@(providerClass) fs-5 me-2"></i>
+                                                            Continue with @provider.DisplayName
+                                                        </button>
+                                                    }
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </section>
+
+                                <div class="text-center mt-4 pt-3">
+                                    <p class="small text-muted">
+                                        Already have an account?
+                                        <a href="/Identity/Account/Login" class="text-primary fw-bold">Sign in here</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Add animation to form elements
+        document.querySelectorAll('.form-floating, .mb-4').forEach((el, index) => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+            setTimeout(() => {
+                el.style.opacity = 1;
+                el.style.transform = 'translateY(0)';
+            }, 100 + (index * 100));
+        });
+    </script>
+}
+
+@* Add this if you want to keep the Styles section *@
+@section Styles {
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-outline-primary:hover {
+            color: #fff;
+        }
+    </style>
 }
