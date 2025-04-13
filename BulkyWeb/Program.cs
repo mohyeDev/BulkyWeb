@@ -14,6 +14,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
+builder.Services.AddRazorPages();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 var app = builder.Build();
 
@@ -32,6 +33,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapRazorPages();
+
 
 app.MapControllerRoute(
     name: "default",
