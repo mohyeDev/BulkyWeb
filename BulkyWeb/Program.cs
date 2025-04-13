@@ -14,6 +14,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.LoginPath = $"/Identity/Account/Login";
+    option.LogoutPath= $"/Identity/Account/Logut";
+    option.AccessDeniedPath= $"/Identity/Account/AccessDenied";
+});
+
 
 builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
 builder.Services.AddRazorPages();
