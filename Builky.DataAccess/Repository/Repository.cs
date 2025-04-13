@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Builky.DataAccess.Repository.IRepository;
 using Builky.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
