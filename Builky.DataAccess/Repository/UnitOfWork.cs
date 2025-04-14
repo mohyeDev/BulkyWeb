@@ -16,11 +16,14 @@ namespace Builky.DataAccess.Repository
 
         public IProductRepository productRepository { get; private set; }
 
+        public ICompanyReositiory companyReositiory { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             categoryRespoitory = new CategoryRepository(_db);
             productRepository = new ProductRepository(_db);
+            companyReositiory = new CompanyReositiory(_db);
         }
 
 

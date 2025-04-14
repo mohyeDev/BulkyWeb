@@ -11,6 +11,8 @@ namespace Builky.DataAccess.Repository.IRepository
         ICategoryRespoitory categoryRespoitory { get; }
         IProductRepository productRepository { get; }
 
+        ICompanyReositiory companyReositiory { get; }
+
         void Save();
     }
 }
