@@ -30,6 +30,14 @@
 
                                 <!-- Email Input -->
                                 <div class="form-floating mb-3">
+                                    <input asp-for="Input.Name" class="form-control rounded-3" autocomplete="username" aria-required="true" placeholder="" />
+                                    <label asp-for="Input.Name" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>Name
+                                    </label>
+                                    <span asp-validation-for="Input.Name" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
                                     <input asp-for="Input.Email" class="form-control rounded-3" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                                     <label asp-for="Input.Email" class="text-muted">
                                         <i class="bi bi-envelope me-1"></i>Email address
@@ -55,6 +63,46 @@
                                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger small"></span>
                                 </div>
 
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.StreetAddress" class="form-control rounded-3"   placeholder="" />
+                                    <label asp-for="Input.StreetAddress" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>Street Address
+                                    </label>
+                                    <span asp-validation-for="Input.StreetAddress" class="text-danger small"></span>
+                                </div>
+
+                                 <div class="form-floating mb-3">
+                                    <input asp-for="Input.City" class="form-control rounded-3"   placeholder="" />
+                                    <label asp-for="Input.City" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>City
+                                    </label>
+                                    <span asp-validation-for="Input.City" class="text-danger small"></span>
+                                </div>
+
+                                 <div class="form-floating mb-3">
+                                    <input asp-for="Input.State" class="form-control rounded-3"   placeholder="" />
+                                    <label asp-for="Input.State" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>State
+                                    </label>
+                                    <span asp-validation-for="Input.State" class="text-danger small"></span>
+                                </div>
+
+                                 <div class="form-floating mb-3">
+                                    <input asp-for="Input.PostalCode" class="form-control rounded-3"   placeholder="" />
+                                    <label asp-for="Input.PostalCode" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i>PostalCode
+                                    </label>
+                                    <span asp-validation-for="Input.PostalCode" class="text-danger small"></span>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input asp-for="Input.PhoneNumber" class="form-control rounded-3" placeholder="" />
+                                    <label asp-for="Input.PhoneNumber" class="text-muted">
+                                        <i class="bi bi-envelope me-1"></i> Phone Number
+                                    </label>
+                                    <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
+                                </div>
+
                                 <!-- Role Selection -->
                                 <div class="mb-4">
                                     <label class="form-label text-muted mb-2">
@@ -64,6 +112,8 @@
                                         <option disabled selected>Select your role</option>
                                     </select>
                                 </div>
+
+
 
                                 <!-- Submit Button -->
                                 <button id="registerSubmit" type="submit" class="w-100 btn btn-primary btn-lg rounded-pill py-3 shadow-sm">
