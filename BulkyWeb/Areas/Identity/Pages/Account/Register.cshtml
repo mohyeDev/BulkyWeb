@@ -113,6 +113,15 @@
                                     </select>
                                 </div>
 
+                                <div class="mb-4">
+                                    <label class="form-label text-muted mb-2">
+                                        <i class="bi bi-person-badge me-1"></i>Select Company
+                                    </label>
+                                    <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select rounded-3 py-3">
+                                        <option disabled selected>Select Comapny</option>
+                                    </select>
+                                </div>
+
 
 
                                 <!-- Submit Button -->
