@@ -117,7 +117,7 @@
                                     <label class="form-label text-muted mb-2">
                                         <i class="bi bi-person-badge me-1"></i>Select Company
                                     </label>
-                                    <select asp-for="Input.CompanyId" asp-items="@Model.Input.CompanyList" class="form-select rounded-3 py-3">
+                                    <select asp-for="Input.CompanyId" style="display:none;" asp-items="@Model.Input.CompanyList" class="form-select rounded-3 py-3">
                                         <option disabled selected>Select Comapny</option>
                                     </select>
                                 </div>
@@ -202,6 +202,20 @@
                 el.style.transform = 'translateY(0)';
             }, 100 + (index * 100));
         });
+
+        $(document).ready(function () {
+            $('#Input_Role').change(function(){
+                var selection = $('#Input_Role Option:Selected').text();
+                if(selection == 'Company')
+                {
+                    $('#Input_CompanyId').show();
+                }
+                else{
+                    $('#Input_CompanyId').hide();
+                }
+            })
+
+        })
     </script>
 }
 
