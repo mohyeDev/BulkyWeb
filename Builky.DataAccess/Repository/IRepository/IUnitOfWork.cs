@@ -15,6 +15,8 @@ namespace Builky.DataAccess.Repository.IRepository
 
         IShoppingCartRepository ShoppingCartRepository { get; }
 
+        IApplicationUserRepository applicationUserRepository { get; }
+
         void Save();
     }
 }

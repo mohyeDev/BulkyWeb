@@ -22,6 +22,8 @@ namespace Builky.DataAccess.Repository
 
         public IShoppingCartRepository ShoppingCartRepository { get; private set; }
 
+        public IApplicationUserRepository applicationUserRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -30,6 +32,8 @@ namespace Builky.DataAccess.Repository
             companyReositiory = new CompanyReositiory(_db);
 
             ShoppingCartRepository = new ShoppingCartRepository(_db);
+
+            applicationUserRepository = new ApplicationUserRepostiroy(_db);
         }
 
 
