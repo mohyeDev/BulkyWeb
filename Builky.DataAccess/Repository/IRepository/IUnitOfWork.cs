@@ -13,6 +13,8 @@ namespace Builky.DataAccess.Repository.IRepository
 
         ICompanyReositiory companyReositiory { get; }
 
+        IShoppingCartRepository ShoppingCartRepository { get; }
+
         void Save();
     }
 }

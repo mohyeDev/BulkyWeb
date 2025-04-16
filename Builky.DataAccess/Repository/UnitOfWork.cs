@@ -1,5 +1,6 @@
 ﻿using Builky.DataAccess.Data;
 using Builky.DataAccess.Repository.IRepository;
+using Builky.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,17 @@ namespace Builky.DataAccess.Repository
 
         public ICompanyReositiory companyReositiory { get; private set; }
 
+
+        public IShoppingCartRepository ShoppingCartRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             categoryRespoitory = new CategoryRepository(_db);
             productRepository = new ProductRepository(_db);
             companyReositiory = new CompanyReositiory(_db);
+
+            ShoppingCartRepository = new ShoppingCartRepository(_db);
         }
 
 
