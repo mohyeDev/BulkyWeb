@@ -24,15 +24,15 @@ namespace BulkyWeb.Areas.Customer.Controllers
         {
 
 
-            var claimIdentity = (ClaimsIdentity) User.Identity;
+            var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             cartVM = new()
             {
-                shoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId , includeProperties: "product")
+                shoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "product")
             };
 
-            foreach(var cart in cartVM.shoppingCartList)
+            foreach (var cart in cartVM.shoppingCartList)
             {
                 cart.price = GetPriceBasedOnQuantity(cart);
                 cartVM.orderTotal += (cart.price * cart.Count);
@@ -40,6 +40,49 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
             return View(cartVM);
         }
+
+
+        public IActionResult Plus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+            cartFromDb.Count += 1;
+            _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Minus(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+
+            if (cartFromDb.Count <= 1)
+            {
+                //Remove
+
+                _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
+            }
+
+            else
+            {
+                cartFromDb.Count -= 1;
+                _unitOfWork.ShoppingCartRepository.Update(cartFromDb);
+
+            }
+
+            _unitOfWork.Save();
+            return RedirectToAction(nameof(Index));
+        }
+
+
+        public IActionResult Remove(int cartId)
+        {
+            var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+            _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
+            _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
@@ -50,7 +93,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
             else
             {
-                if(shoppingCart.Count <= 100)
+                if (shoppingCart.Count <= 100)
                 {
                     return shoppingCart.product.Price50;
                 }
