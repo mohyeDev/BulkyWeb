@@ -40,7 +40,7 @@ namespace Builky.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categrories");
+                    b.ToTable("Categrories", (string)null);
 
                     b.HasData(
                         new
@@ -92,7 +92,7 @@ namespace Builky.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("companies");
+                    b.ToTable("companies", (string)null);
 
                     b.HasData(
                         new
@@ -174,7 +174,7 @@ namespace Builky.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -287,7 +287,7 @@ namespace Builky.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("shoppingCarts");
+                    b.ToTable("shoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

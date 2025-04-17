@@ -4,6 +4,8 @@ using BulkyWeb.Models;
 using Builky.DataAccess.Repository;
 using Builky.Models.Models;
 using Builky.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace BulkyWeb.Areas.Customer.Controllers;
 
@@ -37,6 +39,23 @@ public class HomeController : Controller
         };
 
         return View(shoppingCart);
+    }
+
+
+    [HttpPost]
+
+    [Authorize]
+    public IActionResult Details(ShoppingCart shoppingCart)
+    {
+        shoppingCart.Id = 0;
+         var claimsIdentity  = (ClaimsIdentity) User.Identity;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+        shoppingCart.ApplicationUserId = userId;
+        _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+        _unitOfWork.Save();
+
+        return RedirectToAction(nameof(Index));
+
     }
 
     public IActionResult Privacy()
