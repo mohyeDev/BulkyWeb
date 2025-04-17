@@ -66,7 +66,7 @@ public class HomeController : Controller
         }
             _unitOfWork.Save();
 
-
+        TempData["success"] = "Cart Updated Sucessfully";
         return RedirectToAction(nameof(Index));
 
     }
