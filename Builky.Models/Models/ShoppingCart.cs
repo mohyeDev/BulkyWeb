@@ -28,5 +28,9 @@ namespace Builky.Models.Models {
         public ApplicationUser applicationUser { get; set; }
 
 
+        [NotMapped]
+        public double price { get; set; }
+
+
     }
 }
