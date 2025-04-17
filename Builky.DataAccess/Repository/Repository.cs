@@ -49,7 +49,6 @@ namespace Builky.DataAccess.Repository
             query = query.Where(filter);
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
                 foreach (
                     var includeProp in includeProperties.Split(
                         new char[] { ',' },
@@ -63,12 +62,17 @@ namespace Builky.DataAccess.Repository
             return query.FirstOrDefault();
         }
 
-        public IEnumerable<T> GetAll(string? includeProperties = null)
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
+
+            if(filter is not null)
+            {
+                query = query.Where(filter);
+
+            }
             if (!string.IsNullOrEmpty(includeProperties))
             {
-                _db.Products.Include(u => u.Category).Include(u => u.CategoryId);
                 foreach (
                     var includeProp in includeProperties.Split(
                         new char[] { ',' },
