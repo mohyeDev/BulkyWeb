@@ -12,6 +12,6 @@ namespace Builky.Models.ViewModels
 
         public IEnumerable<ShoppingCart> shoppingCartList { get; set; }
 
-        public double orderTotal { get; set; }
+        public OrderHeader OrderHeader { get; set; }
     }
 }
