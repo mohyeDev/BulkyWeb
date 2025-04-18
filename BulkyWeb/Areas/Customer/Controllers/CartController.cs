@@ -45,7 +45,33 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Summary()
         {
-            return View();
+
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            cartVM = new()
+            {
+                shoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId, includeProperties: "product"),
+                OrderHeader = new()
+            };
+
+            cartVM.OrderHeader.ApplicationUser = _unitOfWork.applicationUserRepository.Get(u => u.Id == userId);
+
+            cartVM.OrderHeader.Name = cartVM.OrderHeader.ApplicationUser.Name;
+            cartVM.OrderHeader.PhoneNumber = cartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            cartVM.OrderHeader.StreetAddress = cartVM.OrderHeader.ApplicationUser.StreetAddress;
+            cartVM.OrderHeader.City = cartVM.OrderHeader.ApplicationUser.City;
+            cartVM.OrderHeader.State = cartVM.OrderHeader.ApplicationUser.State;
+            cartVM.OrderHeader.PostalCode = cartVM.OrderHeader.ApplicationUser.PostalCode;
+
+
+            foreach (var cart in cartVM.shoppingCartList)
+            {
+                cart.price = GetPriceBasedOnQuantity(cart);
+                cartVM.OrderHeader.OrderTotal += (cart.price * cart.Count);
+            }
+
+            return View(cartVM);
         }
 
         public IActionResult Plus(int cartId)
