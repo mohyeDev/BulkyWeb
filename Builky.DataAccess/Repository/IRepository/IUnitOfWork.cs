@@ -17,6 +17,10 @@ namespace Builky.DataAccess.Repository.IRepository
 
         IApplicationUserRepository applicationUserRepository { get; }
 
+        IOrderDetailsRespoitory orderDetailsRespoitory { get; }
+
+        IOrderHeaderRespoitory orderHeaderRespoitory { get; }
+
         void Save();
     }
 }

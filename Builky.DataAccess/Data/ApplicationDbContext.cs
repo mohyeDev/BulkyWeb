@@ -20,6 +20,9 @@ namespace Builky.DataAccess.Data
 
         public DbSet<ShoppingCart> shoppingCarts { get; set; }
 
+        public DbSet<OrderDetail> orderDetails { get; set; }
+
+        public DbSet<OrderHeader> orderHeaders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
