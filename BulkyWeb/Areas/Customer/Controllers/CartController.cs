@@ -85,14 +85,14 @@ namespace BulkyWeb.Areas.Customer.Controllers
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             cartVM.shoppingCartList = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == userId,
-                includeProperties: "Product");
+                includeProperties: "product");
 
             cartVM.OrderHeader.OrderDate = System.DateTime.Now;
 
             cartVM.OrderHeader.ApplicationUserId = userId;
 
-            cartVM.OrderHeader.ApplicationUser = _unitOfWork.applicationUserRepository.Get(u => u.Id == userId);
 
+            ApplicationUser applicationUser = _unitOfWork.applicationUserRepository.Get(u => u.Id == userId);
 
             foreach (var cart in cartVM.shoppingCartList)
             {
@@ -100,7 +100,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 cartVM.OrderHeader.OrderTotal += (cart.price * cart.Count);
             }
 
-            if (cartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 cartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
                 cartVM.OrderHeader.OrderStatus = SD.StatusPending;
@@ -127,7 +127,16 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 _unitOfWork.Save();
 
             }
-            return View(cartVM);
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                //it is a regular customer account and we need to capture payment
+                //stripe logic
+            }
+            return RedirectToAction(nameof(OrderConfirmation), new { id = cartVM.OrderHeader.Id });
+        }
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
         }
         public IActionResult Plus(int cartId)
         {
