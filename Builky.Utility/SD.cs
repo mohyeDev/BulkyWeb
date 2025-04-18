@@ -12,5 +12,16 @@ namespace Builky.Utility
         public const string Role_User_Comp = "Company";
         public const string Role_Admin = "Admin";
         public const string Role_Employee = "Employee";
+
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
+        public const string StatusInProcess = "Processing";
+        public const string StotusShipped = "Shipped";
+        public const string StatusCancelled = "Cancelled";
+        public const string StatusRefunded = "Refunded";
+        public const string PaymentStatusPending = "Pending";
+        public const string PaymentStatusApproved = "Approved";
+        public const string PaymentStatusDelayedPayment = "Approved ForDelayedPayment";
+        public const string PaymentStatusRejected = "Rejected";
     }
 }
