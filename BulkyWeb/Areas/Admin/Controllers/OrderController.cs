@@ -52,7 +52,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                     orderHeaders = orderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
                     break;
                 case "completed":
-                    orderHeaders = orderHeaders.Where(u => u.OrderStatus == SD.StotusShipped);
+                    orderHeaders = orderHeaders.Where(u => u.OrderStatus == SD.StatusShipped);
                     break;
                 case "approved":
                     orderHeaders = orderHeaders.Where(u => u.OrderStatus == SD.StatusApproved);
