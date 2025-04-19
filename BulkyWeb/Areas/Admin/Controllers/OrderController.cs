@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
+
+    [Area("Admin")]
     public class OrderController : Controller
     {
 
@@ -25,7 +27,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult GetAll()
         {
-            List<OrderHeader> orderHeaders = _unitOfWork.orderHeaderRespoitory.GetAll(includeProperties: "ApplicationUserId").ToList();
+            List<OrderHeader> orderHeaders = _unitOfWork.orderHeaderRespoitory.GetAll(includeProperties: "ApplicationUser").ToList();
             return Json(new { data = orderHeaders });
 
         }
