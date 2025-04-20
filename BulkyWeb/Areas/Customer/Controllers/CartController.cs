@@ -221,6 +221,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             if (cartFromDb.Count <= 1)
             {
                 //Remove
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
 
                 _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
             }
@@ -237,9 +238,9 @@ namespace BulkyWeb.Areas.Customer.Controllers
         public IActionResult Remove(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCartRepository.Get(x => x.Id == cartId);
+            HttpContext.Session.SetInt32(SD.SessionCart,_unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count()-1);
             _unitOfWork.ShoppingCartRepository.Remove(cartFromDb);
             _unitOfWork.Save();
-
             return RedirectToAction(nameof(Index));
         }
 
