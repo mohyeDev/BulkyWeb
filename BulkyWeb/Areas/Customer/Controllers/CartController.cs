@@ -196,6 +196,8 @@ namespace BulkyWeb.Areas.Customer.Controllers
                     _unitOfWork.orderHeaderRespoitory.UpdateStatus(id ,SD.StatusApproved , SD.PaymentStatusApproved);
                     _unitOfWork.Save();
                 }
+
+                HttpContext.Session.Clear();
             }
 
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
