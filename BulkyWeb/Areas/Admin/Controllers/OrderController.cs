@@ -5,6 +5,7 @@ using Builky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
 using System.Security.Claims;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -73,6 +74,38 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
         }
 
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+
+        public IActionResult CancelOrder()
+        {
+            var orderHeader = _unitOfWork.orderHeaderRespoitory.Get(u => u.Id == orderVM.OrderHeader.Id);
+            if (orderHeader.PaymentStatus == SD.PaymentStatusApproved)
+            {
+                var options = new RefundCreateOptions
+                {
+                    Reason = RefundReasons.RequestedByCustomer,
+                    PaymentIntent = orderHeader.PaymentIntentId
+                };
+
+                var service = new RefundService();
+                Refund refund = service.Create(options);
+
+                _unitOfWork.orderHeaderRespoitory.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusRefunded);
+            }
+
+            else
+            {
+                _unitOfWork.orderHeaderRespoitory.UpdateStatus(orderHeader.Id, SD.StatusCancelled, SD.StatusCancelled);
+            }
+
+
+            _unitOfWork.Save();
+
+            TempData["success"] = "Order Cancelled Successfully";
+            return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
+
+        }
         [HttpPost]
         [Authorize(Roles =SD.Role_Admin+","+SD.Role_Employee)]
         public IActionResult UpdateOrderDetail(int orderId)
