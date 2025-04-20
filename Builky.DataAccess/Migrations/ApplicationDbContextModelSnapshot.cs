@@ -628,6 +628,22 @@ namespace Builky.DataAccess.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "54d8d51d-6684-475a-96ad-0cba170d958e",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5b021265-1f9b-4dec-8bc4-672982230f9e",
+                            Email = "Admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "123",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "aafb5b01-e827-4d19-a020-b4344de1ac71",
+                            TwoFactorEnabled = false,
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Builky.Models.Models.OrderDetail", b =>

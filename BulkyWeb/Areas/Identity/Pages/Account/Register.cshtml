@@ -10,7 +10,15 @@
                     <div class="row">
                         <div class="col-12 text-center">
                             <h2 class="text-white mb-0 fw-bold">
-                                <i class="bi bi-person-plus me-2"></i>Register
+                                @if(User.IsInRole(SD.Role_Admin))
+                                {
+                                    <i class="bi bi-person-plus me-2"> Register Admin Portal</i>
+                                }
+
+                                else{
+                                    <i class="bi bi-person-plus me-2">Register</i>
+
+                                }
                             </h2>
                         </div>
                     </div>
@@ -71,7 +79,7 @@
                                     <span asp-validation-for="Input.StreetAddress" class="text-danger small"></span>
                                 </div>
 
-                                 <div class="form-floating mb-3">
+                                <div class="form-floating mb-3">
                                     <input asp-for="Input.City" class="form-control rounded-3"   placeholder="" />
                                     <label asp-for="Input.City" class="text-muted">
                                         <i class="bi bi-envelope me-1"></i>City
@@ -79,7 +87,7 @@
                                     <span asp-validation-for="Input.City" class="text-danger small"></span>
                                 </div>
 
-                                 <div class="form-floating mb-3">
+                                <div class="form-floating mb-3">
                                     <input asp-for="Input.State" class="form-control rounded-3"   placeholder="" />
                                     <label asp-for="Input.State" class="text-muted">
                                         <i class="bi bi-envelope me-1"></i>State
@@ -87,7 +95,7 @@
                                     <span asp-validation-for="Input.State" class="text-danger small"></span>
                                 </div>
 
-                                 <div class="form-floating mb-3">
+                                <div class="form-floating mb-3">
                                     <input asp-for="Input.PostalCode" class="form-control rounded-3"   placeholder="" />
                                     <label asp-for="Input.PostalCode" class="text-muted">
                                         <i class="bi bi-envelope me-1"></i>PostalCode
@@ -102,25 +110,31 @@
                                     </label>
                                     <span asp-validation-for="Input.PhoneNumber" class="text-danger small"></span>
                                 </div>
-
                                 <!-- Role Selection -->
-                                <div class="mb-4">
-                                    <label class="form-label text-muted mb-2">
-                                        <i class="bi bi-person-badge me-1"></i>Select Role
-                                    </label>
-                                    <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-3 py-3">
-                                        <option disabled selected>Select your role</option>
-                                    </select>
-                                </div>
+                                @if (User.IsInRole(SD.Role_Admin))
+                                {
+                                    <div class="mb-4">
+                                        <label class="form-label text-muted mb-2">
+                                            <i class="bi bi-person-badge me-1"></i>Select Role
+                                        </label>
+                                        <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select rounded-3 py-3">
+                                            <option disabled selected>Select your role</option>
+                                        </select>
+                                    </div>
 
-                                <div class="mb-4">
-                                    <label class="form-label text-muted mb-2">
-                                        <i class="bi bi-person-badge me-1"></i>Select Company
-                                    </label>
-                                    <select asp-for="Input.CompanyId" style="display:none;" asp-items="@Model.Input.CompanyList" class="form-select rounded-3 py-3">
-                                        <option disabled selected>Select Comapny</option>
-                                    </select>
-                                </div>
+
+
+                                    <div class="mb-4">
+                                        <label class="form-label text-muted mb-2">
+                                            <i class="bi bi-person-badge me-1"></i>Select Company
+                                        </label>
+                                        <select asp-for="Input.CompanyId" style="display:none;" asp-items="@Model.Input.CompanyList" class="form-select rounded-3 py-3">
+                                            <option disabled selected>Select Comapny</option>
+                                        </select>
+                                    </div>
+
+                                }
+                               
 
 
 
