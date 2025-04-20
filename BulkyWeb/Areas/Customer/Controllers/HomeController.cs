@@ -25,14 +25,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var claimIdentity = (ClaimsIdentity) User.Identity;
-        var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
-
-        if(claim is not null)
-        {
-            HttpContext.Session.SetInt32(SD.SessionCart,
-             _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == claim.Value).Count());
-        }
+        
 
 
 
