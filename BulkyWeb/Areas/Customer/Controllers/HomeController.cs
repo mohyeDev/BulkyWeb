@@ -28,10 +28,10 @@ public class HomeController : Controller
         var claimIdentity = (ClaimsIdentity) User.Identity;
         var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-        if(claim.Value is not null)
+        if(claim is not null)
         {
             HttpContext.Session.SetInt32(SD.SessionCart,
-                _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == claim.Value).Count());
+             _unitOfWork.ShoppingCartRepository.GetAll(u => u.ApplicationUserId == claim.Value).Count());
         }
 
 
