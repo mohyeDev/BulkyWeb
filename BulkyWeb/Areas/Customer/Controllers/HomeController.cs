@@ -6,6 +6,7 @@ using Builky.Models.Models;
 using Builky.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Builky.Utility;
 
 namespace BulkyWeb.Areas.Customer.Controllers;
 
@@ -62,9 +63,12 @@ public class HomeController : Controller
         else
         {
             _unitOfWork.ShoppingCartRepository.Add(shoppingCart);
+            _unitOfWork.Save();
+            HttpContext.Session.SetInt32(SD.SessionCart,
+                _unitOfWork.ShoppingCartRepository.GetAll(u=>u.ApplicationUserId == userId)
+                .Count());
 
         }
-            _unitOfWork.Save();
 
         TempData["success"] = "Cart Updated Sucessfully";
         return RedirectToAction(nameof(Index));

@@ -25,7 +25,15 @@ builder.Services.ConfigureApplicationCookie(option =>
 builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IEmailSender, EmailSender>(); 
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,6 +51,7 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapRazorPages();
 
 
