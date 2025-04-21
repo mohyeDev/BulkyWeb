@@ -59,8 +59,8 @@ namespace Builky.DataAccess.DbInitializer
                 _userManager.CreateAsync(new ApplicationUser
                 {
 
-                    UserName = "Admin",
-                    Email = "Admin@Admin.com",
+                    UserName = "Admin@gmail.com",
+                    Email = "Admin@gmail.com",
                     Name = "Admin",
                     PhoneNumber = "01122334455",
                     StreetAddress = "Admin",
@@ -70,7 +70,7 @@ namespace Builky.DataAccess.DbInitializer
                 }, "Admin123*").GetAwaiter().GetResult();
 
 
-                ApplicationUser user = _db.applicationUsers.FirstOrDefault(u => u.Email == "Admin@Admin.com");
+                ApplicationUser user = _db.applicationUsers.FirstOrDefault(u => u.Email == "Admin@gmail.com");
 
                 _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
             }
